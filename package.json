@@ -1,16 +1,22 @@
 {
-  "name": "orinoco-backend",
+  "name": "orinoco-frontend",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZordanLS/JordanLesur_5_23042021.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZordanLS/JordanLesur_5_23042021/issues"
+  },
+  "homepage": "https://github.com/ZordanLS/JordanLesur_5_23042021#readme",
   "dependencies": {
-    "bootstrap": "^3.4.1",
-    "express": "^4.16.4",
-    "uuid": "^3.3.2"
+    "jquery": "^3.6.0"
   }
 }
