@@ -2,6 +2,7 @@
 ## Jordan Lesur
 
 Pour démarrer le serveur, 
-il faut executer ```bash
+il faut executer
+```bash
 npm run server
 ```
