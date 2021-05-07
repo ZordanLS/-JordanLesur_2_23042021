@@ -19,11 +19,11 @@ function injectHtml(productsList) {
 
     // Création de la div card avec la classe card
     let card = document.createElement("div");
-    card.setAttribute("class", "card col-3 m-3");
+    card.setAttribute("class", "card col-10 col-md-5 col-lg-3 col-xxl-2 m-2");
 
     // Création de l'image avec sa classe, sa source et son alt
     let img = document.createElement("img");
-    img.setAttribute("class", "card-img-top");
+    img.setAttribute("class", "card-img-top cardimage");
     img.setAttribute("src", product.imageUrl);
     img.setAttribute("alt", product.name);
 
@@ -39,20 +39,22 @@ function injectHtml(productsList) {
 
     // Création de la description
     let cardDescription = document.createElement("p");
-    cardDescription.setAttribute("class", "card-text");
+    cardDescription.setAttribute("class", "card-text carddescription");
     let productDescription = document.createTextNode(product.description);
     cardDescription.appendChild(productDescription);
 
-    // Création du prix
+    // Création et mise en forme en € du prix
+    product.price = product.price / 100;
+    let productPriceResolved = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(product.price);
     let cardPrice = document.createElement("p");
     cardPrice.setAttribute("class", "card-text");
-    let productPrice = document.createTextNode(product.price + " €");
+    let productPrice = document.createTextNode(productPriceResolved);
     cardPrice.appendChild(productPrice);
 
     // Création du lien vers la page produit
     let cardLink = document.createElement("a");
     cardLink.setAttribute("class", "btn btn-primary");
-    cardLink.setAttribute("href", "#");
+    cardLink.setAttribute("href", "produit.html?id=" + product._id);
     let productLink = document.createTextNode("Voir le produit");
     cardLink.appendChild(productLink);
 

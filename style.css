@@ -1,0 +1,20 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.cardimage {
+    height: 30vh;
+    object-fit: cover;
+}
+
+.carddescription {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+}
