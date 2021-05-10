@@ -25,7 +25,7 @@ function injectHtml(product) {
   let productName = document.getElementById("productname");
   let productDescription = document.getElementById("productdescription");
   let productPrice = document.getElementById("productprice");
-  let addToBasket = document.getElementById("addtobasket");
+  let addToCart = document.getElementById("addtocart");
   let productOptions = document.getElementById("colors");
 
   // La boucle récupère l'array contenant les couleurs possibles et crée une ligne du menu déroulant par couleur existante
@@ -40,5 +40,25 @@ function injectHtml(product) {
   productName.innerText = product.name;
   productDescription.innerText = product.description;
   productPrice.innerText = productPriceResolved;
-  addToBasket.setAttribute("href", "#");
+  addToCart.setAttribute("href", "#");
+
+  // Création du système de panier
+
+  function cartNumbers() {
+    let productNumbers = localStorage.getItem("cartNumbers");
+    productNumbers = parseInt(productNumbers);
+    if (productNumbers) {
+      localStorage.setItem("cartNumbers", productNumbers + 1);
+    } else {
+      localStorage.setItem("cartNumbers", 1);
+    }
+  }
+  let carts = document.querySelectorAll('.addtocart');
+
+  for (let i=0; i < carts.length; i++) {
+    carts[i].addEventListener("click", () => {
+      cartNumbers();
+    });
+  }
+
 }
