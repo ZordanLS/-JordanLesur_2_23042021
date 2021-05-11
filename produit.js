@@ -1,6 +1,6 @@
 // Récupération du paramètre de recherche dans l'URL
 let url = new URL(window.location.href);
-var urlSearchParams = url.searchParams;
+let urlSearchParams = url.searchParams;
 let productId = urlSearchParams.get("id");
 
 // Récupère les données du produit correspondant à l'ID récupéré au dessus
@@ -44,21 +44,30 @@ function injectHtml(product) {
 
   // Création du système de panier
 
-  function cartNumbers() {
-    let productNumbers = localStorage.getItem("cartNumbers");
-    productNumbers = parseInt(productNumbers);
-    if (productNumbers) {
-      localStorage.setItem("cartNumbers", productNumbers + 1);
+  function cartContent() {
+    let cartProducts = localStorage.getItem("cartContent");
+    if (cartProducts) {
+      localStorage.setItem("cartContent", cartProducts + "," + productId);
     } else {
-      localStorage.setItem("cartNumbers", 1);
+      localStorage.setItem("cartContent", productId);
     }
   }
-  let carts = document.querySelectorAll('.addtocart');
 
-  for (let i=0; i < carts.length; i++) {
-    carts[i].addEventListener("click", () => {
-      cartNumbers();
+  let cart = document.querySelectorAll(".addtocart");
+
+  for (let i = 0; i < cart.length; i++) {
+    cart[i].addEventListener("click", () => {
+      cartContent();
+      let htmlCart = document.getElementById("panier");
+      let cartArray = localStorage.getItem("cartContent").split(",");
+      htmlCart.innerText = "Panier (" + cartArray.length + ")";
     });
+    //let htmlCart = document.getElementById("panier");
+   // let cartArray = localStorage.getItem("cartContent").split(",");
+   // htmlCart.innerText = "Panier (" + cartArray.length + ")";
   }
 
+  for (let itemsInCart = 0; itemsInCart < cartArray.length; itemsInCart++) {}
 }
+
+// Integration du nombre de produits en panier dans le header

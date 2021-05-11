@@ -1,18 +1,20 @@
-// Récupère les données "Teddies" de l'API
-fetch("http://localhost:3000/api/teddies")
-  .then(function (res) {
-    if (res.ok) {
-      return res.json();
-    }
-  })
-  .then(function (array) {
-    injectHtml(array);
-  })
-  .catch(function (err) {});
+var cartArray = localStorage.getItem("cartContent").split(",");
 
-// Pour chaque produit, crée une carte et l'intègre au HTML
-function injectHtml(productsList) {
-  productsList.map(function (product) {
+for (i = 0; i < cartArray.length; i++) {
+  let productId = cartArray[i];
+  console.log(productId);
+  fetch("http://localhost:3000/api/teddies/" + productId)
+    .then(function (res) {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then(function (product) {
+      injectHtml(product);
+    })
+    .catch(function (err) {});
+
+  function injectHtml(product) {
     let container = document.getElementById("products");
 
     // Création de l'architecture de la page
@@ -53,9 +55,9 @@ function injectHtml(productsList) {
 
     // Création du lien vers la page produit
     let cardLink = document.createElement("a");
-    cardLink.setAttribute("class", "btn btn-primary");
-    cardLink.setAttribute("href", "produit.html?id=" + product._id);
-    let productLink = document.createTextNode("Voir le produit");
+    cardLink.setAttribute("class", "deleteFromCart btn btn-primary");
+    cardLink.setAttribute("href", "#");
+    let productLink = document.createTextNode("Supprimer du panier");
     cardLink.appendChild(productLink);
 
     // Création de la structure parent/enfants de la page des produits
@@ -66,6 +68,17 @@ function injectHtml(productsList) {
     cardBody.appendChild(cardDescription);
     cardBody.appendChild(cardPrice);
     cardBody.appendChild(cardLink);
-  });
-}
 
+    let cartString = localStorage.getItem("cartContent");
+
+    let deleteFromCart = document.getElementsByClassName('deleteFromCart');
+    function deleteFromCartFuction() {
+    cartString.replace(productID,'');
+    localStorage.setItem('cartContent', cartString);
+    };
+    deleteFromCart.addEventListener("click", () => {
+      deleteFromCartFuction();
+    });
+  }
+
+}

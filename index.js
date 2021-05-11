@@ -68,4 +68,3 @@ function injectHtml(productsList) {
     cardBody.appendChild(cardLink);
   });
 }
-
