@@ -67,7 +67,6 @@ function injectHtml(product) {
    // htmlCart.innerText = "Panier (" + cartArray.length + ")";
   }
 
-  for (let itemsInCart = 0; itemsInCart < cartArray.length; itemsInCart++) {}
-}
+ }
 
 // Integration du nombre de produits en panier dans le header

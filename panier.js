@@ -1,27 +1,45 @@
-var cartArray = localStorage.getItem("cartContent").split(",");
+function updateCartNumber() {
+  if (localStorage.getItem("cartContent") !== undefined && localStorage.getItem("cartContent") !== '' && localStorage.getItem("cartContent") !== null) {
+    document.getElementById("panier").innerText = "Panier (" + localStorage.getItem("cartContent").split(",").length + ")"
+  } else {
+    document.getElementById("panier").innerText = "Panier"
+  
+  }}
+  function displayEmptyCartMessage() {
+    let container = document.getElementById("products");
+    let emptyCart = document.createElement('div');
+    emptyCart.setAttribute("class", "alert alert-primary");
+    emptyCart.setAttribute("role", "alert");
+    let emptyMessage = document.createTextNode("Votre panier est vide !");
+    emptyCart.appendChild(emptyMessage);
+    container.appendChild(emptyCart);
+  }
+function deleteFromCartFunction(productId) {
+  let cartArray = localStorage.getItem("cartContent").split(",");
+  cartArray.splice(
+    cartArray.findIndex((index) => index === productId),
+    1
+  );
+  let newCartString = cartArray.toString();
+  localStorage.setItem("cartContent", newCartString);
+  let cardsArray = document.getElementsByClassName(`${productId}`);
+  cardsArray[0].remove();
+  updateCartNumber();
+  if (newCartString === '') {
+  displayEmptyCartMessage();
+}
+  //location.reload();
+}
 
-for (i = 0; i < cartArray.length; i++) {
-  let productId = cartArray[i];
-  console.log(productId);
-  fetch("http://localhost:3000/api/teddies/" + productId)
-    .then(function (res) {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then(function (product) {
-      injectHtml(product);
-    })
-    .catch(function (err) {});
-
-  function injectHtml(product) {
+function injectHtml(product) {
+  try {
     let container = document.getElementById("products");
 
     // Création de l'architecture de la page
 
     // Création de la div card avec la classe card
     let card = document.createElement("div");
-    card.setAttribute("class", "card col-10 col-md-5 col-lg-3 col-xxl-2 m-2");
+    card.setAttribute("class", `card col-10 col-md-5 col-lg-3 col-xxl-2 m-2 ${product._id}`);
 
     // Création de l'image avec sa classe, sa source et son alt
     let img = document.createElement("img");
@@ -53,14 +71,16 @@ for (i = 0; i < cartArray.length; i++) {
     let productPrice = document.createTextNode(productPriceResolved);
     cardPrice.appendChild(productPrice);
 
-    // Création du lien vers la page produit
-    let cardLink = document.createElement("a");
-    cardLink.setAttribute("class", "deleteFromCart btn btn-primary");
-    cardLink.setAttribute("href", "#");
+    // Création du bouton du suppression du panier
+    let cardLink = document.createElement("div");
+    cardLink.setAttribute("class", 'btn btn-primary');
     let productLink = document.createTextNode("Supprimer du panier");
+    cardLink.addEventListener("click", () => {
+      deleteFromCartFunction(product._id);
+    });
     cardLink.appendChild(productLink);
 
-    // Création de la structure parent/enfants de la page des produits
+    // Création de la structure parent/enfants de la page
     container.appendChild(card);
     card.appendChild(img);
     card.appendChild(cardBody);
@@ -68,17 +88,28 @@ for (i = 0; i < cartArray.length; i++) {
     cardBody.appendChild(cardDescription);
     cardBody.appendChild(cardPrice);
     cardBody.appendChild(cardLink);
-
-    let cartString = localStorage.getItem("cartContent");
-
-    let deleteFromCart = document.getElementsByClassName('deleteFromCart');
-    function deleteFromCartFuction() {
-    cartString.replace(productID,'');
-    localStorage.setItem('cartContent', cartString);
-    };
-    deleteFromCart.addEventListener("click", () => {
-      deleteFromCartFuction();
-    });
+  } catch (error) {
+    console.log(error);
   }
+}
 
+if (localStorage.getItem("cartContent") !== '' && localStorage.getItem("cartContent") !== undefined && localStorage.getItem("cartContent") !== null) {
+var cartArray = localStorage.getItem("cartContent").split(",");
+
+for (cardNumber = 0; cardNumber < cartArray.length; cardNumber++) {
+  let productId = cartArray[cardNumber];
+  fetch("http://localhost:3000/api/teddies/" + productId)
+    .then(function (res) {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then(function (product) {
+      injectHtml(product, cardNumber);
+    })
+    .catch(function (err) {});
+}
+} else {   
+  
+displayEmptyCartMessage();
 }
