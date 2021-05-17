@@ -1,19 +1,19 @@
-function updateCartNumber() {
+/*function updateCartNumber() {
   if (localStorage.getItem("cartContent") !== undefined && localStorage.getItem("cartContent") !== '' && localStorage.getItem("cartContent") !== null) {
     document.getElementById("panier").innerText = "Panier (" + localStorage.getItem("cartContent").split(",").length + ")"
   } else {
     document.getElementById("panier").innerText = "Panier"
-  
-  }}
-  function displayEmptyCartMessage() {
-    let container = document.getElementById("products");
-    let emptyCart = document.createElement('div');
-    emptyCart.setAttribute("class", "alert alert-primary");
-    emptyCart.setAttribute("role", "alert");
-    let emptyMessage = document.createTextNode("Votre panier est vide !");
-    emptyCart.appendChild(emptyMessage);
-    container.appendChild(emptyCart);
-  }
+    }}*/
+
+function displayEmptyCartMessage() {
+  let container = document.getElementById("products");
+  let emptyCart = document.createElement("div");
+  emptyCart.setAttribute("class", "alert alert-primary");
+  emptyCart.setAttribute("role", "alert");
+  let emptyMessage = document.createTextNode("Votre panier est vide !");
+  emptyCart.appendChild(emptyMessage);
+  container.appendChild(emptyCart);
+}
 function deleteFromCartFunction(productId) {
   let cartArray = localStorage.getItem("cartContent").split(",");
   cartArray.splice(
@@ -25,10 +25,9 @@ function deleteFromCartFunction(productId) {
   let cardsArray = document.getElementsByClassName(`${productId}`);
   cardsArray[0].remove();
   updateCartNumber();
-  if (newCartString === '') {
-  displayEmptyCartMessage();
-}
-  //location.reload();
+  if (newCartString === "") {
+    displayEmptyCartMessage();
+  }
 }
 
 function injectHtml(product) {
@@ -39,17 +38,23 @@ function injectHtml(product) {
 
     // Création de la div card avec la classe card
     let card = document.createElement("div");
-    card.setAttribute("class", `card col-10 col-md-5 col-lg-3 col-xxl-2 m-2 ${product._id}`);
+    card.setAttribute("class", `card col-12 ${product._id}`);
 
-    // Création de l'image avec sa classe, sa source et son alt
+    // Création de la row englobant le contenu de la carte
+    let row = document.createElement("div");
+    row.setAttribute("class", "row cartRow");
+
+    // Création du conteneur et de l'image avec sa classe, sa source et son alt
+    let imgContainer = document.createElement("div");
+    imgContainer.setAttribute("class", "col-sm-3 d-flex");
     let img = document.createElement("img");
-    img.setAttribute("class", "card-img-top cardimage");
+    img.setAttribute("class", "cardimage cartImage m-auto");
     img.setAttribute("src", product.imageUrl);
     img.setAttribute("alt", product.name);
 
-    // Création de la div cardBody avec la classe card-body
+    // Création de la div cardBody avec la classe card-body-right
     let cardBody = document.createElement("div");
-    cardBody.setAttribute("class", "card-body");
+    cardBody.setAttribute("class", "card-body-right col-sm-8 d-flex flex-column m-auto");
 
     // Création du H5 (nom du produit)
     let cardTitle = document.createElement("h5");
@@ -73,43 +78,45 @@ function injectHtml(product) {
 
     // Création du bouton du suppression du panier
     let cardLink = document.createElement("div");
-    cardLink.setAttribute("class", 'btn btn-primary');
-    let productLink = document.createTextNode("Supprimer du panier");
+    cardLink.setAttribute("class", "btn col-sm-1 d-flex");
+    let deleteIcon = document.createElement("i");
+    deleteIcon.setAttribute("class", "far fa-trash-alt fs-3 m-auto");
     cardLink.addEventListener("click", () => {
       deleteFromCartFunction(product._id);
     });
-    cardLink.appendChild(productLink);
+    cardLink.appendChild(deleteIcon);
 
     // Création de la structure parent/enfants de la page
     container.appendChild(card);
-    card.appendChild(img);
-    card.appendChild(cardBody);
+    card.appendChild(row);
+    row.appendChild(imgContainer);
+    row.appendChild(cardBody);
+    imgContainer.appendChild(img);
     cardBody.appendChild(cardTitle);
     cardBody.appendChild(cardDescription);
     cardBody.appendChild(cardPrice);
-    cardBody.appendChild(cardLink);
+    row.appendChild(cardLink);
   } catch (error) {
     console.log(error);
   }
 }
 
-if (localStorage.getItem("cartContent") !== '' && localStorage.getItem("cartContent") !== undefined && localStorage.getItem("cartContent") !== null) {
-var cartArray = localStorage.getItem("cartContent").split(",");
+if (localStorage.getItem("cartContent") !== "" && localStorage.getItem("cartContent") !== undefined && localStorage.getItem("cartContent") !== null) {
+  var cartArray = localStorage.getItem("cartContent").split(",");
 
-for (cardNumber = 0; cardNumber < cartArray.length; cardNumber++) {
-  let productId = cartArray[cardNumber];
-  fetch("http://localhost:3000/api/teddies/" + productId)
-    .then(function (res) {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then(function (product) {
-      injectHtml(product, cardNumber);
-    })
-    .catch(function (err) {});
-}
-} else {   
-  
-displayEmptyCartMessage();
+  for (cardNumber = 0; cardNumber < cartArray.length; cardNumber++) {
+    let productId = cartArray[cardNumber];
+    fetch("http://localhost:3000/api/teddies/" + productId)
+      .then(function (res) {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then(function (product) {
+        injectHtml(product, cardNumber);
+      })
+      .catch(function (err) {});
+  }
+} else {
+  displayEmptyCartMessage();
 }

@@ -23,3 +23,11 @@ html {
 main {
 margin-bottom: 5rem;
 }
+
+.cartRow {
+    height: 150px;
+}
+
+.cartImage {
+    max-height: 150px;
+}
