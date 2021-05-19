@@ -31,17 +31,19 @@ function deleteFromCartFunction(productId, price) {
 
 function submitOrder() {
   let form = document.forms["orderform"].elements;
-  let products = []
-  let sentData = { contact : {
-    firstName: form.firstname.value,
-    lastName: form.lastname.value,
-    address: form.address.value,
-    city: form.city.value,
-    email: form.formemail.value},
-    products : products
+  let products = [];
+  let sentData = {
+    contact: {
+      firstName: form.firstname.value,
+      lastName: form.lastname.value,
+      address: form.address.value,
+      city: form.city.value,
+      email: form.formemail.value,
+    },
+    products: products,
   };
   console.log(sentData);
-  fetch("http://localhost:3000/api/teddies/order", { method: "POST", body: JSON.stringify(sentData), headers: { "Content-Type" : "application/json" }}).then(function (res) {
+  fetch("http://localhost:3000/api/teddies/order", { method: "POST", body: JSON.stringify(sentData), headers: { "Content-Type": "application/json" } }).then(function (res) {
     if (res.ok) {
       console.log(res);
     } else {
@@ -119,7 +121,6 @@ function injectHtml(product) {
   } catch (error) {
     console.log(error);
   }
-
 }
 
 function injectPrice(totalPrice) {
@@ -135,24 +136,24 @@ function injectPrice(totalPrice) {
 
 if (localStorage.getItem("cartContent") !== "" && localStorage.getItem("cartContent") !== undefined && localStorage.getItem("cartContent") !== null) {
   var cartArray = localStorage.getItem("cartContent").split(",");
-  
+
   for (cardNumber = 0; cardNumber < cartArray.length; cardNumber++) {
     var productId = cartArray[cardNumber];
     fetch("http://localhost:3000/api/teddies/" + productId)
-    .then(function (res) {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then(function (product) {
-      injectHtml(product, cardNumber);
-      return product.price;
-    })
-    .then(function (price) {
-      totalPrice[0] += Number(price);
-      injectPrice(totalPrice[0]);
-    })
-    .catch(function (err) {});
+      .then(function (res) {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then(function (product) {
+        injectHtml(product, cardNumber);
+        return product.price;
+      })
+      .then(function (price) {
+        totalPrice[0] += Number(price);
+        injectPrice(totalPrice[0]);
+      })
+      .catch(function (err) {});
   }
 } else {
   displayEmptyCartMessage();
