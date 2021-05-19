@@ -31,3 +31,7 @@ margin-bottom: 5rem;
 .cartImage {
     max-height: 150px;
 }
+
+.carttitle {
+    margin: auto;
+}
