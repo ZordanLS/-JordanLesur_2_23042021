@@ -20,7 +20,7 @@ function deleteFromCartFunction(productId, price) {
   var cardsArray = document.getElementsByClassName(`${productId}`);
   cardsArray[0].remove();
   updateCartNumber();
-  totalPrice[0]-= price;
+  totalPrice[0] -= price;
   injectPrice(totalPrice[0]);
   if (newCartString === "") {
     displayEmptyCartMessage();
@@ -28,6 +28,28 @@ function deleteFromCartFunction(productId, price) {
     h4.remove();
   }
 }
+
+function submitOrder() {
+  let form = document.forms["orderform"].elements;
+  let products = []
+  let sentData = { contact : {
+    firstName: form.firstname.value,
+    lastName: form.lastname.value,
+    address: form.address.value,
+    city: form.city.value,
+    email: form.formemail.value},
+    products : products
+  };
+  console.log(sentData);
+  fetch("http://localhost:3000/api/teddies/order", { method: "POST", body: JSON.stringify(sentData), headers: { "Content-Type" : "application/json" }}).then(function (res) {
+    if (res.ok) {
+      console.log(res);
+    } else {
+      console.log("Erreur", res);
+    }
+  });
+}
+
 function injectHtml(product) {
   try {
     var container = document.getElementById("products");
@@ -36,7 +58,7 @@ function injectHtml(product) {
 
     // Création de la div card avec la classe card
     var card = document.createElement("div");
-    card.setAttribute("class", `card col-12 ${product._id}`);
+    card.setAttribute("class", `col-12 ${product._id}`);
 
     // Création de la row englobant le contenu de la carte
     var row = document.createElement("div");
@@ -73,7 +95,7 @@ function injectHtml(product) {
     cardPrice.setAttribute("class", "card-text price");
     var productPrice = document.createTextNode(productPriceResolved);
     cardPrice.appendChild(productPrice);
-    
+
     // Création du bouton du suppression du panier
     var cardLink = document.createElement("div");
     cardLink.setAttribute("class", "btn col-sm-1 d-flex");
@@ -83,7 +105,7 @@ function injectHtml(product) {
       deleteFromCartFunction(product._id, product.price);
     });
     cardLink.appendChild(deleteIcon);
-    
+
     // Création de la structure parent/enfants de la page
     container.appendChild(card);
     card.appendChild(row);
@@ -97,6 +119,7 @@ function injectHtml(product) {
   } catch (error) {
     console.log(error);
   }
+
 }
 
 function injectPrice(totalPrice) {
@@ -120,17 +143,23 @@ if (localStorage.getItem("cartContent") !== "" && localStorage.getItem("cartCont
       if (res.ok) {
         return res.json();
       }
-      })
-      .then(function (product) {
-        injectHtml(product, cardNumber);
-        return product.price;
-      })
-      .then(function (price) {
-        totalPrice[0] += Number(price);
-        injectPrice(totalPrice[0]);
-      })
-      .catch(function (err) {});
+    })
+    .then(function (product) {
+      injectHtml(product, cardNumber);
+      return product.price;
+    })
+    .then(function (price) {
+      totalPrice[0] += Number(price);
+      injectPrice(totalPrice[0]);
+    })
+    .catch(function (err) {});
   }
 } else {
   displayEmptyCartMessage();
 }
+
+// Création du bouton d'envoi de la commande
+let submitButton = document.getElementById("submitbutton");
+submitButton.addEventListener("click", () => {
+  submitOrder();
+});
