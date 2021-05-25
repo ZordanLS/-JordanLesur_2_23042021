@@ -47,7 +47,6 @@ exports.getOneTeddy = (req, res, next) => {
  *
  */
 exports.orderTeddies = (req, res, next) => {
-  console.log(req.body)
   if (!req.body.contact ||
     !req.body.contact.firstName ||
     !req.body.contact.lastName ||

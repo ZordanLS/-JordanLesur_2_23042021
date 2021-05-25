@@ -39,7 +39,7 @@
       <div class="container-fluid d-flex flex-wrap mt-3">
         <div class="container mt-3 d-flex flex-wrap justify-content-around col-8" id="products"></div>
         <div class="col-3 mx-auto">
-          <form id="orderform" name="orderform">
+          <form id="orderform" name="orderform" onsubmit="event.preventDefault(); submitOrder();">
             <div class="form-group justify-content-center">
               <input name="firstname" id="firstname" class="form-control my-3" placeholder="Prénom" required />
               <input name="lastname" id="lastname" class="form-control my-3" placeholder="Nom" required />
@@ -47,7 +47,7 @@
               <input name="city" id="city" class="form-control my-3" placeholder="Ville" required />
               <input name="formemail" id="formemail" type="email" class="form-control my-3" placeholder="Email" required />
             </div>
-            <button type="button" class="btn btn-primary" id="submitbutton">Valider la commande</button>
+            <button type="submit" class="btn btn-primary" id="submitbutton">Valider la commande</button>
           </form>
           <h4 id="totalprice" class="text-center mt-5"></h4>
         </div>

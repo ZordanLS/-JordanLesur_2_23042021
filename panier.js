@@ -31,7 +31,8 @@ function deleteFromCartFunction(productId, price) {
 
 function submitOrder() {
   let form = document.forms["orderform"].elements;
-  let products = [];
+  let productsString = localStorage.getItem("cartContent").split(",");
+  let products = [productsString];
   let sentData = {
     contact: {
       firstName: form.firstname.value,
@@ -42,14 +43,13 @@ function submitOrder() {
     },
     products: products,
   };
-  console.log(sentData);
-  fetch("http://localhost:3000/api/teddies/order", { method: "POST", body: JSON.stringify(sentData), headers: { "Content-Type": "application/json" } }).then(function (res) {
-    if (res.ok) {
-      console.log(res);
-    } else {
-      console.log("Erreur", res);
-    }
-  });
+
+  fetch("http://localhost:3000/api/teddies/order", { method: "POST", body: JSON.stringify(sentData), headers: { "Content-Type": "application/json" } })
+    .then((res) => res.json())
+    .then((json) => console.log(json));
+  let orderId = json.orderId;
+  localStorage.setItem("cartContent", "");
+  window.location.href = "commande.html?id=" + orderId;
 }
 
 function injectHtml(product) {
@@ -161,6 +161,4 @@ if (localStorage.getItem("cartContent") !== "" && localStorage.getItem("cartCont
 
 // Création du bouton d'envoi de la commande
 let submitButton = document.getElementById("submitbutton");
-submitButton.addEventListener("click", () => {
-  submitOrder();
-});
+let form = document.forms["orderform"];
