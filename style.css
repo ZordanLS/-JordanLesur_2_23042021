@@ -35,3 +35,19 @@ margin-bottom: 5rem;
 .carttitle {
     margin: auto;
 }
+
+.order-confirm-text {
+    font-size: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+#orderid {
+    font-weight: bolder;
+    color: green;
+}
+
+h1 {
+    padding-left: 2rem;
+    margin-top: 1rem;
+}

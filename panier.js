@@ -43,13 +43,14 @@ function submitOrder() {
     },
     products: products,
   };
-
   fetch("http://localhost:3000/api/teddies/order", { method: "POST", body: JSON.stringify(sentData), headers: { "Content-Type": "application/json" } })
-    .then((res) => res.json())
-    .then((json) => console.log(json));
-  let orderId = json.orderId;
-  localStorage.setItem("cartContent", "");
-  window.location.href = "commande.html?id=" + orderId;
+  .then((res) => res.json())
+  .then((json) => {
+    console.log(json);
+    let orderId = json.orderId;
+    localStorage.setItem("cartContent", "");
+    window.location.href = "commande.html?id=" + orderId;
+  });
 }
 
 function injectHtml(product) {
