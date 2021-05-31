@@ -4,7 +4,6 @@ html {
 }
 
 .cardimage {
-    height: 30vh;
     object-fit: cover;
 }
 
@@ -64,4 +63,8 @@ h1 {
 
 #productprice {
     margin: auto;
+}
+
+#submitbutton {
+    display: block;
 }

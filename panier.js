@@ -74,15 +74,15 @@ function injectHtml(product) {
 
     // Création du conteneur et de l'image avec sa classe, sa source et son alt
     var imgContainer = document.createElement("div");
-    imgContainer.setAttribute("class", "col-sm-3 d-flex");
+    imgContainer.setAttribute("class", " col-4 d-flex");
     var img = document.createElement("img");
-    img.setAttribute("class", "cardimage cartImage m-auto");
+    img.setAttribute("class", "cardimage cartImage m-auto img-fluid");
     img.setAttribute("src", product.imageUrl);
     img.setAttribute("alt", product.name);
 
     // Création de la div cardBody avec la classe card-body-right
     var cardBody = document.createElement("div");
-    cardBody.setAttribute("class", "card-body-right col-sm-8 d-flex flex-column m-auto");
+    cardBody.setAttribute("class", "card-body-right col-7 d-flex flex-column my-auto");
 
     // Création du H5 (nom du produit)
     var cardTitle = document.createElement("h5");
@@ -106,7 +106,7 @@ function injectHtml(product) {
 
     // Création du bouton du suppression du panier
     var cardLink = document.createElement("div");
-    cardLink.setAttribute("class", "btn col-sm-1 d-flex");
+    cardLink.setAttribute("class", "btn col-1 d-flex");
     var deleteIcon = document.createElement("i");
     deleteIcon.setAttribute("class", "far fa-trash-alt fs-3 m-auto");
     cardLink.addEventListener("click", () => {
