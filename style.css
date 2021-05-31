@@ -50,4 +50,18 @@ margin-bottom: 5rem;
 h1 {
     padding-left: 2rem;
     margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+#colors {
+    max-width: 10rem;
+}
+
+#addtocart {
+    width: 12rem;
+    margin: auto;
+}
+
+#productprice {
+    margin: auto;
 }

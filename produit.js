@@ -62,10 +62,5 @@ function injectHtml(product) {
       let cartArray = localStorage.getItem("cartContent").split(",");
       htmlCart.innerText = "Panier (" + cartArray.length + ")";
     });
-    //let htmlCart = document.getElementById("panier");
-    // let cartArray = localStorage.getItem("cartContent").split(",");
-    // htmlCart.innerText = "Panier (" + cartArray.length + ")";
   }
 }
-
-// Integration du nombre de produits en panier dans le header

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <!-- Required meta tags -->
+    <!-- Meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -37,10 +37,10 @@
     <main>
       <h1 id="carttitle">Mon panier</h1>
       <div class="container-fluid d-flex flex-wrap mt-3">
-        <div class="container mt-3 d-flex flex-wrap justify-content-around col-8" id="products"></div>
-        <div class="col-3 mx-auto">
+        <div class="container mt-3 d-flex flex-wrap justify-content-around col-lg-8 col-12" id="products"></div>
+        <div class="col-lg-3 col-6 mx-auto">
           <form id="orderform" name="orderform" onsubmit="event.preventDefault(); submitOrder();">
-            <div class="form-group justify-content-center">
+            <div class="form-group justify-content-center d-flex flex-wrap">
               <input name="firstname" id="firstname" class="form-control my-3" placeholder="Prénom" required />
               <input name="lastname" id="lastname" class="form-control my-3" placeholder="Nom" required />
               <input name="address" id="address" class="form-control my-3" placeholder="Adresse" required />

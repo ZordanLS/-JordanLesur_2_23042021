@@ -1,4 +1,7 @@
+// Déclaration de la variable totalPrice pour l'utiliser dans 2 fonctions différentes
 var totalPrice = [0];
+
+// Fonction qui affiche un message de panier vide si c'est le cas
 function displayEmptyCartMessage() {
   var container = document.getElementById("products");
   var emptyCart = document.createElement("div");
@@ -9,6 +12,7 @@ function displayEmptyCartMessage() {
   container.appendChild(emptyCart);
 }
 
+// Fonction de suppression d'un produit du panier
 function deleteFromCartFunction(productId, price) {
   var cartArray = localStorage.getItem("cartContent").split(",");
   cartArray.splice(
@@ -29,10 +33,10 @@ function deleteFromCartFunction(productId, price) {
   }
 }
 
+// Fonction d'envoi de la commande
 function submitOrder() {
   let form = document.forms["orderform"].elements;
-  let productsString = localStorage.getItem("cartContent").split(",");
-  let products = [productsString];
+  let products = localStorage.getItem("cartContent").split(",");
   let sentData = {
     contact: {
       firstName: form.firstname.value,
@@ -53,6 +57,7 @@ function submitOrder() {
   });
 }
 
+// Fonction de remplissage de la page
 function injectHtml(product) {
   try {
     var container = document.getElementById("products");
@@ -124,6 +129,7 @@ function injectHtml(product) {
   }
 }
 
+// Fonction de création du prix total des produits en panier
 function injectPrice(totalPrice) {
   try {
     var container = document.getElementById("totalprice");
@@ -135,6 +141,7 @@ function injectPrice(totalPrice) {
   }
 }
 
+// Création de l'array des produits en panier s'il n'est pas vide et récupération des informations des produits
 if (localStorage.getItem("cartContent") !== "" && localStorage.getItem("cartContent") !== undefined && localStorage.getItem("cartContent") !== null) {
   var cartArray = localStorage.getItem("cartContent").split(",");
 
