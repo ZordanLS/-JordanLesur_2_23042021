@@ -4,7 +4,7 @@
 Téléchargez le code source de ce projet.
 
 Pour démarrer le serveur, 
-il faut utiliser ces trois lignes de commande dans le termial
+il faut utiliser ces trois lignes de commande dans le terminal
 ```bash
 cd backend
 npm install
