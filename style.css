@@ -5,6 +5,7 @@ html {
 
 .cardimage {
     object-fit: cover;
+    height: 14rem;
 }
 
 .carddescription {
