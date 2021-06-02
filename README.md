@@ -6,7 +6,9 @@ Téléchargez le code source de ce projet.
 Pour démarrer le serveur, 
 il faut executer
 ```bash
-npm run server
+cd backend
+npm install
+node server
 ```
 
 Puis ouvrez index.html
