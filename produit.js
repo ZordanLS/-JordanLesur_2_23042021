@@ -13,14 +13,15 @@ fetch("http://localhost:3000/api/teddies/" + productId)
   .then(function (product) {
     injectHtml(product);
   })
-  .catch(function (err) {});
+  .catch(function (err) {
+    window.location.href = "index.html";
+  });
 
 // Intègre au HTML les différentes informations du produit
 function injectHtml(product) {
   // Formate le prix en €
   product.price = product.price / 100;
   let productPriceResolved = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(product.price);
-  let productTitle = document.getElementById("producttitle");
   let productImage = document.getElementById("productimage");
   let productName = document.getElementById("productname");
   let productDescription = document.getElementById("productdescription");
